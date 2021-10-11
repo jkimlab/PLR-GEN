@@ -31,7 +31,7 @@ System requirements (tested versions)
 Download and installation
 -----------------
 
-* Download and install (source codes)
+* Download and install (source code)
 
         git clone https://github.com/jkimlab/PLR-GEN.git
         cd PLR-GEN
