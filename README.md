@@ -66,6 +66,6 @@ Running PLR-GEN
         
         ==Other options
         -t|-temp	If you use -t option, all intermediate files are left.
-        	Please careful to use this option because it has to be needed very large space.
+        	        Please careful to use this option because it could to be needed very large space.
         -h|help	Print help page.
 
