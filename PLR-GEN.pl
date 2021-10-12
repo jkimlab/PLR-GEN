@@ -166,12 +166,12 @@ sub HELP{
 		print "\n==Running and filtering options\n";
 		print "-p|-core\t<integer>\tthe number of threads (default: 1)\n";
 		print "-q|-mapq\t<integer>\tminimum mapping quality (default: 20)\n";
-		print "-d|-min_depth\t<integer>\ mapping depth % cutoff of bubbles (default: 1, 0-100)\n";
-		print "\t\t0: all bubbles are used.\n";
-		print "\t\t1: bubbles with less than 1% mapping depth from mapping depth distribution of bubbles are discarded.\n";
-		print "\t\t100: all bubbles are converted to normal nodes\n";
 		print "-l|-min_length\t<integer>\tcutoff of minimum length of pseudo-long reads (default: 100bp)\n";
 		print "-c|-min_count\t<integer>\tcutoff of minimum mapping depth for each node (default: 1)\n";
+		print "-d|-min_depth\t<integer>\ cutoff of mapping depth of bubbles (default: 1, 0-100)\n";
+		print "\t\t0: all bubbles are used.\n";
+		print "\t\t1: bubbles with less than 1% mapping depth from mapping depth distribution of bubbles are converted to normal nodes.\n";
+		print "\t\t100: all bubbles are converted to normal nodes\n";		
 		print "\n==Other options\n";
 		print "-t|-temp\tIf you use -t option, all intermediate files are left.\n";
 		print "\tPlease careful to use this option because it has to be needed very large space.\n";
