@@ -175,7 +175,7 @@ sub HELP{
 		print "\n==Other options\n";
 		print "-t|-temp\tIf you use -t option, all intermediate files are left.\n";
 		print "\tPlease careful to use this option because it has to be needed very large space.\n";
-		print "h|help\tPrint help page.\n";
+		print "-h|help\tPrint help page.\n";
 		exit;
 }
 
