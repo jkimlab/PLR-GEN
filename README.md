@@ -36,7 +36,8 @@ Download and installation
         git clone https://github.com/jkimlab/PLR-GEN.git
         cd PLR-GEN
         ./build.pl install
- 
+
+
 * Download Docker image (with all dependencies)  RECOMMENDED! 
 
         docker pull mksim/plrgen:latest
@@ -57,12 +58,12 @@ Running PLR-GEN
         ==Running and filtering options
         -p|-core	<integer>	the number of threads (default: 1)
         -q|-mapq	<integer>	minimum mapping quality (default: 20)
-        -d|-min_depth	<integer> mapping depth % cutoff of bubbles (default: 1, 0-100)
-        		0: all bubbles are used.
-        		1: bubbles with less than 1% mapping depth from mapping depth distribution of bubbles are discarded.
-        		100: all bubbles are converted to normal nodes
         -l|-min_length	<integer>	cutoff of minimum length of pseudo-long reads (default: 100bp)
         -c|-min_count	<integer>	cutoff of minimum mapping depth for each node (default: 1)
+        -d|-min_depth	<integer>       cutoff of mapping depth of bubbles (default: 1, 0-100)
+        		0: all bubble are used.
+        		1: bubbles with less than lowest 1% mapping depth from distribution of mapping depth of bubbles are converted to normal node.
+        		100: all bubbles are converted to normal nodes        
         
         ==Other options
         -t|-temp	If you use -t option, all intermediate files are left.
