@@ -16,6 +16,7 @@ System requirements (tested versions)
         - make (GNU Make 4.1)
         - zip (3.0)
         - wget (1.17.1)
+        - glibc (2.14+) 
 
 * Perl libraries
 
@@ -45,14 +46,16 @@ Download and installation
 
 Running PLR-GEN
 -----------------
+
+* Running options
         
         PLR-GEN.pl [options] -1 <pe1> -2 <pe2> (or -s <se>) -r <ref_list> -o <out_dir>
 
         == MANDATORY
-        -s	<se>	File with unpaired reads
-        -1	<pe1>	File with #1 mates (paired 1)
-        -2	<pe2>	File with #2 mates (paired 2)
-        -r|-ref	<ref_list>	The list of file pathes of reference genome sequences
+        -s	<se>	file with unpaired reads
+        -1	<pe1>	file with #1 mates (paired 1)
+        -2	<pe2>	file with #2 mates (paired 2)
+        -r|-ref	<ref_list>	The list of file paths of reference genome sequences
         -o	<out_dir>	Output directory (default: ./PLR.out)
 
         ==Running and filtering options
@@ -70,3 +73,62 @@ Running PLR-GEN
         	        Please use this option carefully, because it could to be needed very large space.
         -h|help	Print help page.
 
+
+* Parameter information
+
+        [ Input sequence files ]
+       
+       -s      
+                an input sequence file with unpaired reads (single-end reads)
+                a fastq or fastq.gz file
+                
+        -1, -2 
+                input sequence files with paired-end reads
+                fastq or fastq.gz files 
+        
+        -r|-ref 
+                a list with file paths of reference genome sequences
+                a text file
+        
+        -o 
+                a name (or specific path) of output directory
+                all outputs will be generated in this directory 
+                
+        [ PLR-GEN running options ]
+        
+        -p 
+                the number of threads
+                default: 1
+                
+        -q|-mapq
+                cutoff of mapping quality (used in samtools)
+                read mapping from bowtie outputs less than this cutoff value will be discarded
+                default: 20
+                
+        -l|-min_length
+                minimum length cutoff of generated pseudo-long reads (PLRs)
+                generated PLRs less than this cutoff value will be discarded
+                default: 100
+                
+        -c|-min_count
+                cutoff of mapping depth for generating normal nodes and bubbles
+                after piling-up of read mapping, alignment column less than this cutoff value will be discarded
+                default: 1
+        
+        -d|-min_depth
+                cutoff of mapping depth of bubbles for filtering bubble nodes
+                1) a distribution of mapping depths is obtained from all bubble nodes
+                2) 
+                
+        
+         ==Running and filtering options
+        
+        -d|-min_depth	<integer>       cutoff of mapping depth of bubbles (default: 1, 0-100)
+        		0: all bubble are used.
+        		1: bubbles with less than lowest 1% mapping depth from distribution of mapping depth of bubbles are converted to normal node.
+        		100: all bubbles are converted to normal nodes        
+        
+        ==Other options
+        -t|-temp	If you use -t option, all intermediate files are left.
+        	        Please use this option carefully, because it could to be needed very large space.
+        -h|help	Print help page.
