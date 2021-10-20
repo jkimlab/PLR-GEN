@@ -71,7 +71,7 @@ Running PLR-GEN
         ==Other options
         -t|-temp	If you use -t option, all intermediate files are left.
         	        Please use this option carefully, because it could to be needed very large space.
-        -h|help	Print help page.
+        -h|-help	Print help page.
 
 
 * Parameter information
@@ -107,28 +107,37 @@ Running PLR-GEN
                 
         -l|-min_length
                 minimum length cutoff of generated pseudo-long reads (PLRs)
-                generated PLRs less than this cutoff value will be discarded
+                generated PLRs less than the cutoff value will be discarded
                 default: 100
                 
         -c|-min_count
                 cutoff of mapping depth for generating normal nodes and bubbles
-                after piling-up of read mapping, alignment column less than this cutoff value will be discarded
+                after piling-up of read mapping, alignment column less than the cutoff value will be discarded
                 default: 1
         
         -d|-min_depth
                 cutoff of mapping depth of bubbles for filtering bubble nodes
-                1) a distribution of mapping depths is obtained from all bubble nodes
-                2) 
+                a bubble with less than the cutoff % of mapping depth will be converted to a normal node
+        
+        [ Other options ]
+        -t|-temp
+                all intermediate output and intermediate log files are left
+                It could be needed very large space
+        
+* Input and output file format
+
+        * a list of reference sequence file ] 
+        
+        - absolute or relative paths of reference sequence files
+        - example
+                [local_data_path]/ref_1.fa
+                [local_data_path]/ref_2.fa
+                ... 
+
+        * pseudo-long_read.fa
+                generated PLR sequence fasta file (final output)
                 
+        * log.PSEUDO-LONG_READ_GEN.txt
+                recorded log messages and used parameter
+       
         
-         ==Running and filtering options
-        
-        -d|-min_depth	<integer>       cutoff of mapping depth of bubbles (default: 1, 0-100)
-        		0: all bubble are used.
-        		1: bubbles with less than lowest 1% mapping depth from distribution of mapping depth of bubbles are converted to normal node.
-        		100: all bubbles are converted to normal nodes        
-        
-        ==Other options
-        -t|-temp	If you use -t option, all intermediate files are left.
-        	        Please use this option carefully, because it could to be needed very large space.
-        -h|help	Print help page.
