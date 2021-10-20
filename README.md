@@ -126,7 +126,7 @@ Running PLR-GEN
         
 * Input and output file format
 
-        * a list of reference sequence file ] 
+        * a list of reference sequence file 
         
         - absolute or relative paths of reference sequence files
         - example
