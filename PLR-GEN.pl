@@ -8,14 +8,14 @@ use Cwd 'abs_path';
 use Parallel::ForkManager;
 
 ## Mandatory
-my ($read1, $read2);
+my ($read_s, $read1, $read2);
 my $in_ref_list;
 
 ## Optional
 my $out_dir = "./PR_out";
 my $in_cpu = 1;
 my $mapping_quality = 20;
-my $bubble_depth_cutoff = 1; 
+my $bubble_depth_cutoff = 1;
 my $min_plr_length = 100;
 my $min_aln_count = 1;
 my $minor_bubble_cutoff = 0.5;
@@ -25,7 +25,7 @@ my $help;
 
 ## parameters
 my $options = GetOptions(
-		"s=s" => \$read1, # mandatory (incompatible with -1 and -2)
+		"s=s" => \$read_s, # mandatory (incompatible with -1 and -2)
 		"1=s" => \$read1, # mandatory (incompatible with -s)
 		"2=s" => \$read2, # mandatory (incompatible with -s)
 		"r|ref=s" => \$in_ref_list, # mandatory
@@ -44,15 +44,26 @@ my $options = GetOptions(
 if(!defined($options)){ HELP(); }
 if(defined($help)){ HELP(); }
 if(!defined($in_ref_list)){ HELP(); }
-if(!defined($read1)){ HELP(); }
+if(defined($read_s) && defined($read1)){
+		HELP();
+}
+if(defined($read1) && !defined($read2)){
+		HELP();
+}
+if(defined($read2) && !defined($read1)){
+		HELP();
+}
 `mkdir -p $out_dir/data/ref $out_dir/raw_plrs`;
 $out_dir = abs_path("$out_dir");
 open(FLOG, ">$out_dir/log.PSEUDO-LONG_READ_GEN.txt");
 print STDERR "= Used parameters\n";
 print FLOG "= Used parameters\n";
-print STDERR "== READ1 : $read1\n";
-print FLOG "== READ1 : $read1\n";
-if(defined($read2)){
+if(defined($read_s)){
+		print STDERR "== READ : $read_s\n";
+}
+else{
+		print STDERR "== READ1 : $read1\n";
+		print FLOG "== READ1 : $read1\n";
 		print STDERR "== READ2 : $read2\n";
 		print FLOG "== READ2 : $read2\n";
 }
@@ -68,7 +79,7 @@ print STDERR "== MIN MAPPED READ DEPTH : $min_aln_count\n";
 print FLOG "== MIN MAPPED READ DEPTH : $min_aln_count\n";
 print STDERR "== MIN READ DEPTH OF BUBBLE : $bubble_depth_cutoff\n";
 print FLOG "== MIN READ DEPTH OF BUBBLE : $bubble_depth_cutoff\n";
-if(defined($temp_save)){ 
+if(defined($temp_save)){
 		print STDERR "== all intermediated files will be saved.\n";
 		print FLOG "== all intermediated files will be saved.\n";
 }
@@ -84,8 +95,8 @@ print STDERR "= Preprocessing\n";
 print FLOG "= Preprocessing\n";
 print STDERR "== READ ID CONVERTING\n";
 print FLOG "== READ ID CONVERTING\n";
-if(!defined($read2)){
-		`$Bin/src/read_id_convert_single.pl $read1 $out_dir/data`;
+if(defined($read_s)){
+		`$Bin/src/read_id_convert_single.pl $read_s $out_dir/data`;
 		$read1 = "$out_dir/data/read.fq";
 }
 else{
@@ -158,9 +169,9 @@ sub HELP{
 		my $src = basename($0);
 		print "\nUsage: $src [options] -1 <pe1> -2 <pe2> (or -s <se>) -r <ref_list> -o <out_dir>\n";
 		print "\n== MANDATORY \n";
-		print "-s\t<se>\tFile with unpaired reads\n";
-		print "-1\t<pe1>\tFile with #1 mates (paired 1)\n"; 
-		print "-2\t<pe2>\tFile with #2 mates (paired 2)\n"; 
+		print "-s\t<se>\tFile with unpaired reads [incompatible with -1 and -2]\n";
+		print "-1\t<pe1>\tFile with #1 mates (paired 1) [incompatible with -s]\n";
+		print "-2\t<pe2>\tFile with #2 mates (paired 2) [incompatible with -s]\n";
 		print "-r|-ref\t<ref_list>\tThe list of reference genome sequence files\n";
 		print "-o\t<out_dir>\tOutput directory (default: ./PR.out\n";
 		print "\n==Running and filtering options\n";
@@ -171,11 +182,11 @@ sub HELP{
 		print "-d|-min_depth\t<integer>\ cutoff of mapping depth of bubbles (default: 1, 0-100)\n";
 		print "\t\t0: all bubbles are used.\n";
 		print "\t\t1: bubbles with less than 1% mapping depth from mapping depth distribution of bubbles are converted to normal nodes.\n";
-		print "\t\t100: all bubbles are converted to normal nodes\n";		
+		print "\t\t100: all bubbles are converted to normal nodes\n";
 		print "\n==Other options\n";
 		print "-t|-temp\tIf you use -t option, all intermediate files are left.\n";
 		print "\tPlease careful to use this option because it has to be needed very large space.\n";
-		print "-h|help\tPrint help page.\n";
+		print "-h|-help\tPrint help page.\n";
 		exit;
 }
 
