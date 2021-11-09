@@ -146,7 +146,7 @@ Example data preparation
         
 * Input short reads (Human Microbiome Project dataset)
 
-        Metagenome short paired-end reads of HMP dataset used to PLR-GEN example are available from NCBI SRA.
+        Metagenome short paired-end reads of HMP dataset used to application of PLR-GEN (in manuscript) are available from NCBI SRA.
         
         - Accession number : SRR2822457
         - NCBI SRA URL : https://www.ncbi.nlm.nih.gov/sra/SRR2822457
