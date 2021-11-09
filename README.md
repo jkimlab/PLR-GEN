@@ -147,10 +147,15 @@ Example data
 * Input short reads (Human Microbiome Project dataset)
   
   Metagenome short paired-end reads of HMP dataset used to application of PLR-GEN (in manuscript) are available from NCBI SRA.
-  If you have SRA toolkit, you can download this dataset using Download.sh file in 'example' directory.
         
         - Accession number : SRR2822457
         - NCBI SRA URL : https://www.ncbi.nlm.nih.gov/sra/SRR2822457
+
+  If you have SRA toolkit, you can download this dataset using Download.sh file in 'example' directory, using the command below.
+  
+        cd PLR-GEN/example
+        ./Download.sh 
+        
         
 * Reference genome sequences 
 
@@ -165,6 +170,5 @@ Example data
   When all files of example dataset (metagenome short reads and a file list of reference genome sequences), use the command below.
   
         cd PLR-GEN/example
-        ./Download.sh 
         ./CMD.sh <threads> <outdir>
 
