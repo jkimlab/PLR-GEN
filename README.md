@@ -141,7 +141,7 @@ Running PLR-GEN
                 recorded log messages and used parameter
        
 
-Example data
+Running PLR-GEN with HMP dataset
 -----------------
         
 * Input short reads (Human Microbiome Project dataset)
