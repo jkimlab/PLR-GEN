@@ -140,4 +140,14 @@ Running PLR-GEN
         * log.PSEUDO-LONG_READ_GEN.txt
                 recorded log messages and used parameter
        
+
+Example data preparation
+-----------------
+        
+* Input short reads (Human Microbiome Project dataset)
+
+        Metagenome short paired-end reads of HMP dataset used to PLR-GEN example are available from NCBI SRA.
+        
+        - Accession number : SRR2822457
+        - NCBI SRA URL : https://www.ncbi.nlm.nih.gov/sra/SRR2822457
         
