@@ -165,5 +165,5 @@ Example data
   When all files of example dataset (metagenome short reads and a file list of reference genome sequences), use the command below.
   
         cd PLR-GEN/example
-        ./CMD.sh
+        ./CMD.sh <threads> <outdir>
 
