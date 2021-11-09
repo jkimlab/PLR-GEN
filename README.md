@@ -141,7 +141,7 @@ Running PLR-GEN
                 recorded log messages and used parameter
        
 
-Example data preparation
+Example data
 -----------------
         
 * Input short reads (Human Microbiome Project dataset)
@@ -150,4 +150,9 @@ Example data preparation
         
         - Accession number : SRR2822457
         - NCBI SRA URL : https://www.ncbi.nlm.nih.gov/sra/SRR2822457
+        
+* Reference genome sequences 
+
+        All used reference genome sequence files for running PLR-GEN (in manuscript) are in ref_fa directory of this package.
+        There is list.txt file in the ref_fa directoy that is an example of the list of reference file.
         
