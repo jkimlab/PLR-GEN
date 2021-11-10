@@ -22,6 +22,7 @@ my $log_dir = "$Bin/third_party/logs";
 `mkdir -p $log_dir`;
 
 if($mode eq "install"){
+	`chmod +x $Bin/example/*.sh`;
 	`mkdir -p $Bin/bin`;
 	# Unzip bowtie2
 	print STDERR ">> Unzip bowtie2...";
