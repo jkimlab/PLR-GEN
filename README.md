@@ -95,7 +95,7 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
 
 2. Output options 
 
-   - `-o` : a path of output directory (default: ./PR_out; final output: ./OUTDIR/pseudo-long-read.fa)
+   - `-o` : a path of output directory (default: ./PR_out; final output: ./PR_out/pseudo-long-read.fa)
    - `-t` : if this option is used, all intermediated output files are saved (default: not used)
 
 3. Running options
