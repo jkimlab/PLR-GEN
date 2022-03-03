@@ -89,7 +89,7 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
    - :sparkle: `-s` : an input sequence file with unpaired reads (single-end reads); a fastq or fastq.gz file
    - :sparkle: `-1` and `-2` : input sequence files with paired-end reads; fastq or fastq.gz files 
    - :sparkle: `-r` or `-ref` : a list with all file paths of reference genome sequences; a text file
-   - `-tama` : if this option is used, TAMA program will be used for reference preparation instead of `-r` (default: not used)
+   - :sparkle: `-tama` : if this option is used, TAMA program will be used for reference preparation instead of `-r` (default: not used)
    - `-sampling` : if this option is used, reference genomes will be randomly selected and used (default: not used)
 
 2. Output options 
@@ -104,25 +104,25 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
    - `-c` or `-min_count` : cutoff of mapping depth for generating normal nodes and bubbles; after piling-up of read mapping, alignment column less than the cutoff value will be discarded (default: 1)
    - `-d` or `-min_depth` : cutoff of mapping depth of bubbles for filtering bubble nodes; a bubble with less than the cutoff % of mapping depth will be converted to a normal node
 
-* HELP PAGE of PLR-GEN 
+* Help page of PLR-GEN 
 
 		Usage: PLR-GEN.pl [options] -1 <pe1> -2 <pe2> (or -s <se>) -r <ref_list> -o <out_dir>
 
-		== MANDATORY
+		== MANDATORY 
 		-s	<se>	File with unpaired reads [incompatible with -1 and -2]
 		-1	<pe1>	File with #1 mates (paired 1) [incompatible with -s]
 		-2	<pe2>	File with #2 mates (paired 2) [incompatible with -s]
 		-r|-ref	<ref_list>	The list of reference genome sequence files
 		-tama	Reference preparation using TAMA [incompatible with -r|-ref]
 		-sampling	<proportion>	proportion to random sampling for references (default: off, range: 0-1)
-		-o	<out_dir>	Output directory (default: ./PR.out
+		-o	<out_dir>	Output directory (default: ./PR.out)
 
 		==Running and filtering options
-		-p|-core	<integer>	the number of threads (default: 1)
-		-q|-mapq	<integer>	minimum mapping quality (default: 20)
-		-l|-min_length	<integer>	cutoff of minimum length of pseudo-long reads (default: 100bp)
-		-c|-min_count	<integer>	cutoff of minimum mapping depth for each node (default: 1)
-		-d|-min_depth	<integer> cutoff of mapping depth of bubbles (default: 1, range: 0-100)
+		-p|-core	<integer>	The number of threads (default: 1)
+		-q|-mapq	<integer>	Minimum mapping quality (default: 20)
+		-l|-min_length	<integer>	Cutoff of minimum length of pseudo-long reads (default: 100bp)
+		-c|-min_count	<integer>	Cutoff of minimum mapping depth for each node (default: 1)
+		-d|-min_depth	<integer> Cutoff of mapping depth of bubbles (default: 1, range: 0-100)
 				0: all bubbles are used.
 				1: bubbles with less than 1% mapping depth from mapping depth distribution of bubbles are converted to normal nodes.
 				100: all bubbles are converted to normal nodes
@@ -132,6 +132,57 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
 			Please careful to use this option because it has to be needed very large space.
 		-h|-help	Print help page.
 
+
+
+## Examples of running PLR-GEN
+### Simple examples
+
+1. Using single-end reads and a list of reference genomes
+
+		./PLR-GEN.pl -s s_read.fq -r reference_list.txt -o outdir 
+	
+2. Using paired-end reads and a list of reference genomes
+
+		./PLR-GEN.pl -1 read_1.fq -2 read_2.fq -r reference_list.txt -o outdir
+		
+3. Using paired-end reads and a predicted set of references with TAMA
+
+		./PLR-GEN.pl -1 read_1.fq -2 read_2.fq -tama -o outdir
+		
+4. Using paired-end reads and 10% of reference genomes with random sampling
+
+		./PLR-GEN.pl -1 read_1.fq -2 read_2.fq -r reference_list.txt -sampling 0.1
+		
+5. Using paired-end reads and 20% of predicted reference genomes with TAMA 
+
+		./PLR-GEN.pl -1 read_1.fq -2 read_2.fq -tama -sampling 0.2
+
+6. Discarding shorter PLRs (< 1000bp)
+
+		./PLR-GEN.pl -1 read_1.fq -2 read_2.fq -tama -min_length 1000
+		
+7. Using strict mapping cutoff (>= 40)
+
+		./PLR-GEN.pl -1 read_1.fq -2 read_2.fq -tama -mapq 40
+		
+### Examples of running with the Docker image
+
+- If you pulled the PLR-GEN docker image (jkimlab/plrgen), read_1.fq, read_2.fq are in /LOCAL_DISK/DATA directory, all reference sequence files are in /LOCAL_DISK/DATA/fasta/ directory, you can run PLR-GEN with docker image as followed command,
+	1. Make a reference list file in the /LOCAL_DISK/DATA directory with the file system for the docker image, for an example,
+		
+		file: /DATA/reference_list.txt
+		
+			/data_dir/fasta/REF_1.fa
+			/data_dir/fasta/REF_2.fa
+			/data_dir/fasta/REF_3.fa
+
+	2. Run the docker image, mounting /DATA directory to /data_dir directory of docker image, for an example,
+
+			docker run -v /LOCAL_DISK/DATA\:/data_dir -t jkimlab/plrgen PLR-GEN.pl -1 /data_dir/read_1.fq -2 /data_dir/read_2.fq -r /data_dir/reference_list.txt -o /data_dir/output
+			
+- If you want to use TAMA installed at /LOCAL_DISK/PROGRAMS/TAMA, you need to mount the TAMA directory to /work_dir/bin/ directory of docker image, for an example, 
+
+		docker run -v /LOCAL_DISK/PROGRAMS/TAMA:/work_dir/bin/TAMA -v /LOCAL_DISK/DATA\:/data_dir -t jkimlab/plrgen PLR-GEN.pl -1 /data_dir/read_1.fq -2 /data_dir/read_2.fq -r /data_dir/reference_list.txt -o /data_dir/output
 
 
 
