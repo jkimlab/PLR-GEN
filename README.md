@@ -26,7 +26,6 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 		git clone https://github.com/jkimlab/PLR-GEN.git
 		cd PLR-GEN
 		./build.pl install
-		./PLR-GEN.pl
 	
 - Or, you can prepare all dependencies and perl libraries through creating conda env. 
 
