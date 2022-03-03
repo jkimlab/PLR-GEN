@@ -2,6 +2,21 @@
 
 PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-reads of a metagenomic sample and microbial reference genome sequences as input. 
 
+## REQUIREMENTS
+### Third party programs
+
+- [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
+- [BEDtools](https://bedtools.readthedocs.io/en/latest/)
+- [SAMtools](http://www.htslib.org/)
+
+### Perl libraries
+
+- Parallel::ForkManager 
+- Getopt::Long
+- File::Basename
+- Scalar::Util
+- FindBin
+- Math::Round
 
 ## INSTALLATION
 ### Installation using PLR-GEN package
@@ -30,21 +45,6 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 
 - If you can install PLR-GEN and all its dependencies, you need to prepare all third-party programs and adding to $PATH, also need to prepare perl libraries. 
  
-## REQUIREMENTS
-### Third party programs
-
-- [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
-- [BEDtools](https://bedtools.readthedocs.io/en/latest/)
-- [SAMtools](http://www.htslib.org/)
-
-### Perl libraries
-
-- Parallel::ForkManager 
-- Getopt::Long
-- File::Basename
-- Scalar::Util
-- FindBin
-- Math::Round
 
 ### TAMA installation
 
