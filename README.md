@@ -68,15 +68,15 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
 ## USAGE 
 ### Input preparation 
 1. Input single-end or paired-end NGS short reads
-   - Read sequence files are mendatory with fastq format (or compressed by .gz file)
-   - You can use single-end reads with `-s` (incompatible with paired-end option)
-   - Or you can use paired-end reads with `-1` and `-2` (incompatible with single-end option)
+   - Read sequence files are mandatory with fastq format (or compressed by .gz file)
+   - You can use single-end reads with `-s` (incompatible with `-1` and `-2`)
+   - Or you can use paired-end reads with `-1` and `-2` (incompatible with `-s`)
 
 2. A list of reference genome sequences
    - Reference genome sequence files are mendatory with fasta format (or compressed by .gz file)
-   - You can use `-r` or `-ref` option with a list of all the file paths of reference genomes to set up the references for running PLR-GEN
+   - You can use `-r` or `-ref` option (incompatible with `-tama`)with a list of all the file paths of reference genomes to set up the references for running PLR-GEN
 
-3. (Additional) If TAMA is installed, you can predict putative bacterial species in your dataset using TAMA, running PLR-GEN using `-tama` option. 
+3. (Additional) If TAMA is installed, you can predict putative bacterial species in your dataset using TAMA, running PLR-GEN using `-tama` option (incompatible with `-r`). 
 
 ### Running options of PLR-GEN
 
