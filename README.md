@@ -1,80 +1,90 @@
-PLR-GEN
------------------
+# Overview
 
-* Generation and application of pseudo-long reads for metagenome assembly
+PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-reads of a metagenomic sample and microbial reference genome sequences as input. 
+
+## REQUIREMENTS
+### Third party programs
+
+- Bowtie2 (http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
+- BEDtools (https://bedtools.readthedocs.io/en/latest/)
+- SAMtools (http://www.htslib.org/)
+
+### Perl libraries
+
+- Parallel::ForkManager 
+- Getopt::Long
+- File::Basename
+- Scalar::Util
+- FindBin
+- Math::Round
+
+## INSTALLATION
+### Manual installation
+
+- Download and install using the PLR-GEN package from this github. You can install all dependencies and perl libraries automatically using "build.pl". 
+
+		git clone https://github.com/jkimlab/PLR-GEN.git
+		cd PLR-GEN
+		./build.pl install
+		./PLR-GEN.pl
+	
+- You can also prepare all dependencies and perl libraries through creating conda env. 
+
+		git clone https://github.com/jkimlab/PLR-GEN.git
+		cd PLR-GEN
+		conda env create -f plrgen_env.yml
+		conda activate plrgen_env
+
+### Docker installation
+
+- If you use Docker, you can download and use PLR-GEN through pulling docker image. 
+
+		docker pull jkimlab/mspipe
+
+### TAMA installation
+
+- If you want to use TAMA for preparation of reference genomes, you can install TAMA using below commands. It automatically download and install TAMA into the given path, and set the ready-made species-level TAMA databases. These TAMA databases require total 300GB disk space, so please carefully set up the path for installation of TAMA. If you do not specify a path for TAMA, the TAMA package and TAMA databases will be set inside "bin" directory in the PLR-GEN.
+
+1. Manual installation of TAMA
+
+		/LOCAL_PATH/PLR-GEN/src/TAMA_install.pl PATH_to_INSTALL_for_TAMA
+		
+2. Installation of TAMA with Docker
+
+		docker run --rm -v /PATH/TO/TAMA_DIR:/tama_dir -t jkimlab/plrgen:latest /work_dir/src/TAMA_install.pl /tama_dir
 
 
-System requirements (tested versions)
------------------
-
-* Programs
-
-        - perl (v5.22.1)
-        - python (3)
-        - git (2.7.4)
-        - gcc, g++ (7.5.0)
-        - make (GNU Make 4.1)
-        - zip (3.0)
-        - wget (1.17.1)
-        - glibc (2.14+) 
-
-* Perl libraries
-
-        - Parallel::ForkManager 
-        - Getopt::Long
-        - File::Basename
-        - Scalar::Util
-        - FindBin
-        - Math::Round
+## USAGE 
+### Running options of PLR-GEN
         
-        
+	Usage: PLR-GEN.pl [options] -1 <pe1> -2 <pe2> (or -s <se>) -r <ref_list> -o <out_dir>
 
-Download and installation
------------------
+	== MANDATORY
+	-s	<se>	File with unpaired reads [incompatible with -1 and -2]
+	-1	<pe1>	File with #1 mates (paired 1) [incompatible with -s]
+	-2	<pe2>	File with #2 mates (paired 2) [incompatible with -s]
+	-r|-ref	<ref_list>	The list of reference genome sequence files
+	-tama	Reference preparation using TAMA [incompatible with -r|-ref]
+	-sampling	<proportion>	proportion to random sampling for references (default: off, range: 0-1)
+	-o	<out_dir>	Output directory (default: ./PR.out
 
-* Download and install (source code)
+	==Running and filtering options
+	-p|-core	<integer>	the number of threads (default: 1)
+	-q|-mapq	<integer>	minimum mapping quality (default: 20)
+	-l|-min_length	<integer>	cutoff of minimum length of pseudo-long reads (default: 100bp)
+	-c|-min_count	<integer>	cutoff of minimum mapping depth for each node (default: 1)
+	-d|-min_depth	<integer> cutoff of mapping depth of bubbles (default: 1, range: 0-100)
+			0: all bubbles are used.
+			1: bubbles with less than 1% mapping depth from mapping depth distribution of bubbles are converted to normal nodes.
+			100: all bubbles are converted to normal nodes
 
-        git clone https://github.com/jkimlab/PLR-GEN.git
-        cd PLR-GEN
-        ./build.pl install
-
-
-* Download Docker image (with all dependencies)  RECOMMENDED! 
-
-        docker pull mksim/plrgen:latest
-        
-
-Running PLR-GEN
------------------
-
-* Running options
-        
-        PLR-GEN.pl [options] -1 <pe1> -2 <pe2> (or -s <se>) -r <ref_list> -o <out_dir>
-
-        == MANDATORY
-        -s	<se>	file with unpaired reads
-        -1	<pe1>	file with #1 mates (paired 1)
-        -2	<pe2>	file with #2 mates (paired 2)
-        -r|-ref	<ref_list>	The list of file paths of reference genome sequences
-        -o	<out_dir>	Output directory (default: ./PLR.out)
-
-        ==Running and filtering options
-        -p|-core	<integer>	the number of threads (default: 1)
-        -q|-mapq	<integer>	minimum mapping quality (default: 20)
-        -l|-min_length	<integer>	cutoff of minimum length of pseudo-long reads (default: 100bp)
-        -c|-min_count	<integer>	cutoff of minimum mapping depth for each node (default: 1)
-        -d|-min_depth	<integer>       cutoff of mapping depth of bubbles (default: 1, 0-100)
-        		0: all bubble are used.
-        		1: bubbles with less than lowest 1% mapping depth from distribution of mapping depth of bubbles are converted to normal node.
-        		100: all bubbles are converted to normal nodes        
-        
-        ==Other options
-        -t|-temp	If you use -t option, all intermediate files are left.
-        	        Please use this option carefully, because it could to be needed very large space.
-        -h|-help	Print help page.
+	==Other options
+	-t|-temp	If you use -t option, all intermediate files are left.
+		Please careful to use this option because it has to be needed very large space.
+	-h|-help	Print help page.
 
 
-* Parameter information
+### Parameter information
 
         [ Input sequence files ]
        
