@@ -5,9 +5,9 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 ## REQUIREMENTS
 ### Third party programs
 
-- Bowtie2 (http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
-- BEDtools (https://bedtools.readthedocs.io/en/latest/)
-- SAMtools (http://www.htslib.org/)
+- [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
+- [BEDtools](https://bedtools.readthedocs.io/en/latest/)
+- [SAMtools](http://www.htslib.org/)
 
 ### Perl libraries
 
@@ -21,14 +21,14 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 ## INSTALLATION
 ### Manual installation
 
-- Download and install using the PLR-GEN package from this github. You can install all dependencies and perl libraries automatically using "build.pl". 
+- Download and install using the PLR-GEN package from this github. You can install all dependencies and perl libraries automatically using `build.pl` in the packge. For using this code, `wget`, `unzip`, `make`, `cpanm`, and some perl libraries (FindBin, File::Basename)
 
 		git clone https://github.com/jkimlab/PLR-GEN.git
 		cd PLR-GEN
 		./build.pl install
 		./PLR-GEN.pl
 	
-- You can also prepare all dependencies and perl libraries through creating conda env. 
+- Or, you can prepare all dependencies and perl libraries through creating conda env. 
 
 		git clone https://github.com/jkimlab/PLR-GEN.git
 		cd PLR-GEN
@@ -37,9 +37,9 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 
 ### Docker installation
 
-- If you use Docker, you can download and use PLR-GEN through pulling docker image. 
+- If you use Docker, you can download and use PLR-GEN with all dependencies through pulling docker image. 
 
-		docker pull jkimlab/mspipe
+		docker pull jkimlab/plrgen
 
 ### TAMA installation
 
@@ -53,7 +53,7 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 
 		docker run --rm -v /PATH/TO/TAMA_DIR:/tama_dir -t jkimlab/plrgen:latest /work_dir/src/TAMA_install.pl /tama_dir
 
-
+For more information of TAMA, see :point_right: [TAMA github page](https://github.com/jkimlab/TAMA)
 ## USAGE 
 ### Running options of PLR-GEN
         
