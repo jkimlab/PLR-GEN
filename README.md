@@ -2,26 +2,11 @@
 
 PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-reads of a metagenomic sample and microbial reference genome sequences as input. 
 
-## REQUIREMENTS
-### Third party programs
-
-- [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
-- [BEDtools](https://bedtools.readthedocs.io/en/latest/)
-- [SAMtools](http://www.htslib.org/)
-
-### Perl libraries
-
-- Parallel::ForkManager 
-- Getopt::Long
-- File::Basename
-- Scalar::Util
-- FindBin
-- Math::Round
 
 ## INSTALLATION
-### Manual installation
+### Installation using PLR-GEN package
 
-- Download and install using the PLR-GEN package from this github. You can install all dependencies and perl libraries automatically using `build.pl` in the packge. For using this code, `wget`, `unzip`, `make`, `cpanm`, and some perl libraries (FindBin, File::Basename)
+- Download and install using PLR-GEN package from this github. You can install all dependencies and perl libraries automatically using `build.pl` in this packge. For using this code, `wget`, `unzip`, `make`, `cpanm`, and some perl libraries (FindBin, File::Basename)
 
 		git clone https://github.com/jkimlab/PLR-GEN.git
 		cd PLR-GEN
@@ -41,11 +26,31 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 
 		docker pull jkimlab/plrgen
 
+### Manual installation
+
+- If you can install PLR-GEN and all its dependencies, you need to prepare all third-party programs and adding to $PATH, also need to prepare perl libraries. 
+ 
+## REQUIREMENTS
+### Third party programs
+
+- [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
+- [BEDtools](https://bedtools.readthedocs.io/en/latest/)
+- [SAMtools](http://www.htslib.org/)
+
+### Perl libraries
+
+- Parallel::ForkManager 
+- Getopt::Long
+- File::Basename
+- Scalar::Util
+- FindBin
+- Math::Round
+
 ### TAMA installation
 
 - If you want to use TAMA for preparation of reference genomes, you can install TAMA using below commands. It automatically download and install TAMA into the given path, and set the ready-made species-level TAMA databases. These TAMA databases require total 300GB disk space, so please carefully set up the path for installation of TAMA. If you do not specify a path for TAMA, the TAMA package and TAMA databases will be set inside "bin" directory in the PLR-GEN.
 
-1. Manual installation of TAMA
+1. Installation of TAMA using the code in this package
 
 		/LOCAL_PATH/PLR-GEN/src/TAMA_install.pl PATH_to_INSTALL_for_TAMA
 		
@@ -54,6 +59,8 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 		docker run --rm -v /PATH/TO/TAMA_DIR:/tama_dir -t jkimlab/plrgen:latest /work_dir/src/TAMA_install.pl /tama_dir
 
 For more information of TAMA, see :point_right: [TAMA github page](https://github.com/jkimlab/TAMA)
+
+
 ## USAGE 
 ### Running options of PLR-GEN
         
@@ -86,53 +93,53 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
 
 ### Parameter information
 
-        [ Input sequence files ]
-       
-       -s      
-                an input sequence file with unpaired reads (single-end reads)
-                a fastq or fastq.gz file
-                
-        -1, -2 
-                input sequence files with paired-end reads
-                fastq or fastq.gz files 
-        
-        -r|-ref 
-                a list with file paths of reference genome sequences
-                a text file
-        
-        -o 
-                a name (or specific path) of output directory
-                all outputs will be generated in this directory 
-                
-        [ PLR-GEN running options ]
-        
-        -p 
-                the number of threads
-                default: 1
-                
-        -q|-mapq
-                cutoff of mapping quality (used in samtools)
-                read mapping from bowtie outputs less than this cutoff value will be discarded
-                default: 20
-                
-        -l|-min_length
-                minimum length cutoff of generated pseudo-long reads (PLRs)
-                generated PLRs less than the cutoff value will be discarded
-                default: 100
-                
-        -c|-min_count
-                cutoff of mapping depth for generating normal nodes and bubbles
-                after piling-up of read mapping, alignment column less than the cutoff value will be discarded
-                default: 1
-        
-        -d|-min_depth
-                cutoff of mapping depth of bubbles for filtering bubble nodes
-                a bubble with less than the cutoff % of mapping depth will be converted to a normal node
-        
-        [ Other options ]
-        -t|-temp
-                all intermediate output and intermediate log files are left
-                It could be needed very large space
+	[ Input sequence files ]
+
+	-s      
+		an input sequence file with unpaired reads (single-end reads)
+		a fastq or fastq.gz file
+
+	-1, -2 
+		input sequence files with paired-end reads
+		fastq or fastq.gz files 
+
+	-r|-ref 
+		a list with file paths of reference genome sequences
+		a text file
+
+	-o 
+		a name (or specific path) of output directory
+		all outputs will be generated in this directory 
+
+	[ PLR-GEN running options ]
+
+	-p 
+		the number of threads
+		default: 1
+
+	-q|-mapq
+		cutoff of mapping quality (used in samtools)
+		read mapping from bowtie outputs less than this cutoff value will be discarded
+		default: 20
+
+	-l|-min_length
+		minimum length cutoff of generated pseudo-long reads (PLRs)
+		generated PLRs less than the cutoff value will be discarded
+		default: 100
+
+	-c|-min_count
+		cutoff of mapping depth for generating normal nodes and bubbles
+		after piling-up of read mapping, alignment column less than the cutoff value will be discarded
+		default: 1
+
+	-d|-min_depth
+		cutoff of mapping depth of bubbles for filtering bubble nodes
+		a bubble with less than the cutoff % of mapping depth will be converted to a normal node
+
+	[ Other options ]
+	-t|-temp
+		all intermediate output and intermediate log files are left
+		It could be needed very large space
         
 * Input and output file format
 
