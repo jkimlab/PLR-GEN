@@ -43,10 +43,10 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 
 ### Manual installation
 
-- If you can install PLR-GEN and all its dependencies, you need to prepare all third-party programs and adding to $PATH, also need to prepare perl libraries. 
+- If you can install PLR-GEN and all its dependencies, you need to prepare all third-party programs and adding to $PATH, also need to prepare perl libraries (see :point_right: [REQUIREMENTS](https://github.com/jkimlab/PLR-GEN/blob/master/README.md#requirements)). 
  
 
-### TAMA installation
+### (Additional) TAMA installation
 
 - If you want to use TAMA for preparation of reference genomes, you can install TAMA using below commands. It automatically download and install TAMA into the given path, and set the ready-made species-level TAMA databases. These TAMA databases require total 300GB disk space, so please carefully set up the path for installation of TAMA. If you do not specify a path for TAMA, the TAMA package and TAMA databases will be set inside "bin" directory in the PLR-GEN.
 
@@ -62,6 +62,14 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
 
 
 ## USAGE 
+### Input preparation 
+1. Input single-end or paired-end NGS short reads
+   - Read sequences are mendatory with fastq format
+   - You can use single-end reads with `-s` (incompatible with paired-end option)
+   - Or you can use paired-end reads with `-1` and `-2` (incompatible with single-end option)
+
+2. A list of reference genome sequences
+   - 
 ### Running options of PLR-GEN
         
 	Usage: PLR-GEN.pl [options] -1 <pe1> -2 <pe2> (or -s <se>) -r <ref_list> -o <out_dir>
