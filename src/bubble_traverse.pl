@@ -12,8 +12,8 @@ while(<FBG>){
 		chomp;
 		if($_ eq ""){ next; }
 		my ($b_id, $container, $pos_z, $pos, $base, $r_count, $reads) = split(/\t/,$_);
-		my @mapped_r = split(/,/,$reads);
-## Counting 
+		my @mapped_r = split(/,/,$reads); # all mapped read IDs are stored in array @mapped_r
+## Counting the number of overlapped bubbles in a read
 		for(my $i = 0; $i <= $#mapped_r; $i++){
 				if(!exists($hs_read{$container}{$mapped_r[$i]})){
 						$hs_read{$container}{$mapped_r[$i]} = 1;
@@ -24,26 +24,28 @@ while(<FBG>){
 		}
 }
 close(FBG);
-
+#---------------------------------------------------------------------
+###### Finding and storing informative reads
 my %hs_matrix = ();
 my %hs_informative_read = ();
 my %hs_bubble_count = ();
 open(FBG, "$in_bubble_g");
 while(<FBG>){
 		chomp;
-		if($_ eq ""){
-				next;
-		}
+		if($_ eq ""){ next; }
 		my ($b_id, $container, $pos_z, $pos, $base, $r_count, $reads) = split(/\t/,$_);
 		my @mapped_r = split(/,/,$reads);
 		my @informative = ();
 		my @useless = ();
 		my ($bb, $bubble_num, $sub_id) = split(/\W/,$b_id);
 		$hs_bubble_count{$container} = $bubble_num;
-		for(my $i = 0; $i <= $#mapped_r; $i++){
+## Filtering out reads that can not provide linking information of bubbles 
+#### Reads overlapped only one bubble will be ignored 
+		for(my $i = 0; $i <= $#mapped_r; $i++){ 
 				if($hs_read{$container}{$mapped_r[$i]} == 1){
 						push(@useless, $mapped_r[$i]);
 				}
+#### Reads overlapped two or more bubbles will be stored
 				else{
 						push(@informative, $mapped_r[$i]);
 						$hs_matrix{$container}{$bubble_num}{$mapped_r[$i]} = $sub_id;
@@ -55,10 +57,13 @@ while(<FBG>){
 }
 close(FBG);
 
+#---------------------------------------------------------------------
+###### Finding all possible bubble combinations
 print STDERR "#Container\tReadID\tlink_start_pos\tlink_end_pos\tfirst_continuous_link_size\tall_link_size\tBubble_link\n";
+## For each container,
 foreach my $container (sort keys(%hs_read)){
 		my %hs_bubble_combi = ();
-		my %hs_bubble_end = (); # added at Mar 16, 2021
+		my %hs_bubble_end = (); 
 		my @mapped_read = sort {$a<=>$b} keys(%{$hs_informative_read{$container}});
 		foreach my $read (@mapped_read){
 				my $link_start = 0;
