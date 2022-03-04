@@ -68,7 +68,7 @@ while(<FAB>){
 }
 close(FAB);
 `mkdir -p $out_dir/ref_fa`;
-open(FTXT, "$Bin/../sources/assembly_summary.txt");
+open(FTXT, "gunzip -c $Bin/../sources/assembly_summary.txt.gz |");
 while(<FTXT>){
 		chomp;
 		if($_ =~ /^#/){ next; }
