@@ -2,8 +2,11 @@
 use strict;
 use warnings;
 
-my $in_graph = shift;
+my $in_graph = shift; # input : graph.out
 
+
+#---------------------------------------------------------------------
+###### Storing information of bubbles
 my %hs_stat = ();
 open(FGR, "$in_graph");
 while(<FGR>){
@@ -18,7 +21,15 @@ while(<FGR>){
 		}
 }
 close(FGR);
-foreach my $container (sort keys(%hs_stat)){
+
+#---------------------------------------------------------------------
+###### Calculating the statistics of bubbles
+foreach my $container (sort keys(%hs_stat)){ # for each container,
+## output file 1: statistics of bubbles 
+## -> For each bubble, 
+#### (1) the number of different types of nodes (eg. A, and C for a bubble) 
+#### (2) proportion of aligned reads by total aligned reads for each types of node (eg. A: 0.9, and C: 0.1)
+## output file 2: total numbers in a container
 		my $total_bubbles = 0;
 		foreach my $pos (sort {$a<=>$b} keys(%{$hs_stat{$container}})){
 				my @counts = split(",",$hs_stat{$container}{$pos});
@@ -33,7 +44,6 @@ foreach my $container (sort keys(%hs_stat)){
 						#my $prop = sprintf("%.3f",($counts[$i]/$total_counts));
 						my $prop = ($counts[$i]/$total_counts);
 						print "\t$prop";
-#						print "\t$counts[$i]";
 				}
 				print "\n";
 				$total_bubbles += 1;
