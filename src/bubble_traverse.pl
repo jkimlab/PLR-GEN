@@ -4,14 +4,16 @@ use warnings;
 
 my $in_bubble_g = shift;
 
+#---------------------------------------------------------------------
+###### Storing information of mapped reads
 my %hs_read = ();
-
 open(FBG, "$in_bubble_g");
 while(<FBG>){
 		chomp;
 		if($_ eq ""){ next; }
 		my ($b_id, $container, $pos_z, $pos, $base, $r_count, $reads) = split(/\t/,$_);
 		my @mapped_r = split(/,/,$reads);
+## Counting 
 		for(my $i = 0; $i <= $#mapped_r; $i++){
 				if(!exists($hs_read{$container}{$mapped_r[$i]})){
 						$hs_read{$container}{$mapped_r[$i]} = 1;
