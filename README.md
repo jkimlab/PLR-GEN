@@ -33,6 +33,7 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 		cd PLR-GEN
 		conda env create -f plrgen_env.yml
 		conda activate plrgen_env
+		./build.pl install
 
 ### Docker installation
 
