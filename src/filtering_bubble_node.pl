@@ -4,6 +4,7 @@ use warnings;
 use FindBin qw($Bin);
 use Math::Round;
 
+## Arguments
 my $in_graph = $ARGV[0];
 my $in_bubble_stat = $ARGV[1];
 my $in_cutoff_perc = $ARGV[2];
@@ -17,7 +18,9 @@ my @arr_minor_freq = ();
 my %hs_filtout = ();
 my %hs_BtoN = ();
 my %hs_n_node = ();
-if(!-z "$in_bubble_stat"){
+#---------------------------------------------------------------------
+###### Storing information of bubbles
+if(!-z "$in_bubble_stat"){ ## If there is no bubble, this process will be skipped
 		open(FB, "$in_bubble_stat");
 		while(<FB>){
 				chomp;
@@ -26,15 +29,20 @@ if(!-z "$in_bubble_stat"){
 		}
 		close(FB);
 		
+#---------------------------------------------------------------------
+###### Converting bubbles to normal nodes 
 		@arr_read_count = sort {$a<=>$b} @arr_read_count;
 		
+## Filtering 1: bubbles with low read depth
+#### -> bubbles with low read depth < cutoff will be converted to normal node with "N" base
 		my $n_bubble = scalar(@arr_read_count);
 		my $b_pi = int($n_bubble*($in_cutoff_perc/100))-1;
 		my $cutoff_n = $arr_read_count[$b_pi];
-		my $cutoff_f = (1/$cutoff_n);
+		my $cutoff_f = (1/$cutoff_n); ## -> the second filtering cutoff
 		print STDERR "# read depth cutoff = $cutoff_n\n";
 		print STDERR "# filtered out bubbles\n";
 
+## Filtering 2: pruning bubble nodes with relatively low read depth in a bubble
 		open(FSTAT, "$in_bubble_stat");
 		while(<FSTAT>){
 				chomp;
@@ -57,7 +65,7 @@ if(!-z "$in_bubble_stat"){
 				}
 				if($survive == 1){ # when bubble count is too low, $survive must be 1
 						my $m_count = round($max*$t[3]); 
-						if($bubble_to_normal == 1){ # This bubble will be changed to normal node with its base
+						if($bubble_to_normal == 1){ # This bubble will be changed to normal node with its base of the major bubble node
 								$hs_BtoN{$t[0]}{$t[1]}{$m_count} = 1;
 								print STDERR "BTON-1\t$t[0]\t$t[1]\t$m_count\n";
 						}
@@ -84,7 +92,8 @@ if(!-z "$in_bubble_stat"){
 		}
 		close(FSTAT);
 }
-
+#---------------------------------------------------------------------
+###### Making final graph
 my %hs_bubble = ();
 my %hs_sub_id = ();
 
