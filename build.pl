@@ -58,6 +58,10 @@ if($mode eq "install"){
 		print STDERR "Error\n";
 		exit(1);
 	}
+	# Preparing perl libraries
+	print STDERR ">> Preparing perl libraries...";
+	`cpanm Parallel::ForkManager File::Basename Getopt::Long Math::Round Scalar::Util Sort::Key FindBin`;
+	print STDERR "Done\n";
 
 }else{
 	chdir($thirdparty_path);
