@@ -42,7 +42,7 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 
 ### Manual installation
 
-- If you can install PLR-GEN and all its dependencies, you need to prepare all third-party programs and adding to $PATH, also need to prepare perl libraries (see :point_right: [REQUIREMENTS](https://github.com/jkimlab/PLR-GEN/blob/master/README.md#requirements)). 
+- If you can install PLR-GEN and all its dependencies, you need to prepare all third-party programs into /LOCAL_DISK/PLR-GEN/bin/ directory or make a link of path of installed programs to /LOCAL_DISK/PLR-GEN/bin/ directory. You also need to prepare perl libraries mentioned above (see :point_right: [REQUIREMENTS](https://github.com/jkimlab/PLR-GEN/blob/master/README.md#requirements)). 
  
 
 ### (Additional) TAMA installation
@@ -59,7 +59,7 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 		
 3. Manual installation
 
-- You can use manually installed TAMA. To use `-tama` option for PLR-GEN, you need to install TAMA and ready-made species-level databases into /INSTALL_PATH/PLR-GEN/bin/ directory or make a link of path of installed TAMA directory to /INSTALL_PATH/PLR-GEN/bin/ directory.
+- You can use manually installed TAMA. To use `-tama` option for PLR-GEN, you need to install TAMA and ready-made species-level databases into /LOCAL_DISK/PLR-GEN/bin/ directory or make a link of path of installed TAMA directory to /LOCAL_DISK/PLR-GEN/bin/ directory.
 
 For more information of TAMA, see :point_right: [TAMA github page](https://github.com/jkimlab/TAMA)
 
@@ -167,7 +167,7 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
 		
 ### Examples of running with the Docker image
 
-- If you pulled the PLR-GEN docker image (jkimlab/plrgen), read_1.fq, read_2.fq are in /LOCAL_DISK/DATA directory, all reference sequence files are in /LOCAL_DISK/DATA/fasta/ directory, you can run PLR-GEN with docker image as followed command,
+- Suppose (1) you pulled the PLR-GEN docker image (jkimlab/plrgen), (2) read_1.fq, read_2.fq are in /LOCAL_DISK/DATA directory, and (3) all reference sequence files are in /LOCAL_DISK/DATA/fasta/ directory. In this situation, you can run PLR-GEN with docker image as followed command,
 	1. Make a reference list file in the /LOCAL_DISK/DATA directory with the file system for the docker image, for an example,
 		
 		file: /DATA/reference_list.txt
@@ -178,11 +178,11 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
 
 	2. Run the docker image, mounting /DATA directory to /data_dir directory of docker image, for an example,
 
-			docker run -v /LOCAL_DISK/DATA\:/data_dir -t jkimlab/plrgen PLR-GEN.pl -1 /data_dir/read_1.fq -2 /data_dir/read_2.fq -r /data_dir/reference_list.txt -o /data_dir/output
+			docker run -v /LOCAL_DISK/DATA:/data_dir -t jkimlab/plrgen PLR-GEN.pl -1 /data_dir/read_1.fq -2 /data_dir/read_2.fq -r /data_dir/reference_list.txt -o /data_dir/output
 			
 - If you want to use TAMA installed at /LOCAL_DISK/PROGRAMS/TAMA, you need to mount the TAMA directory to /work_dir/bin/ directory of docker image, for an example, 
 
-		docker run -v /LOCAL_DISK/PROGRAMS/TAMA:/work_dir/bin/TAMA -v /LOCAL_DISK/DATA\:/data_dir -t jkimlab/plrgen PLR-GEN.pl -1 /data_dir/read_1.fq -2 /data_dir/read_2.fq -r /data_dir/reference_list.txt -o /data_dir/output
+		docker run -v /LOCAL_DISK/PROGRAMS/TAMA:/work_dir/bin/TAMA -v /LOCAL_DISK/DATA:/data_dir -t jkimlab/plrgen PLR-GEN.pl -1 /data_dir/read_1.fq -2 /data_dir/read_2.fq -r /data_dir/reference_list.txt -o /data_dir/output
 
 
 
