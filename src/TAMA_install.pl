@@ -7,15 +7,27 @@ use File::Basename;
 use Cwd 'abs_path';
 
 ## Input argument : directory path to install
-my $in_dir = $ARGV[0];
+my $in_dir;
+my $help;
+my $bin_dir = abs_path("$Bin/../bin");
 my $options = GetOptions(
-				"dir=s" => \$in_dir
+				"dir=s" => \$in_dir,
+				"h|help" => \$help
 );
 
+if(defined($help)){ PRINT_HELP(); }
 #---------------------------------------------------------------------
 ###### Set up directory
 if(!defined($in_dir)){
-		$in_dir = abs_path("$Bin/../bin");
+		print STDERR "-+- Do you want to install TAMA in to $bin_dir ? [Y/N]\n";
+		my $rep = <STDIN>;
+		if($rep eq "y" | $rep eq "Y"){
+				$in_dir = abs_path("$Bin/../bin");
+		}
+		else{
+				print STDERR "-+- Please set up the place to install TAMA.\n";
+				PRINT_HELP();
+		}
 }
 else{
 		if(!-e $in_dir){ `mkdir -p $in_dir`; }
@@ -33,3 +45,10 @@ chdir("$in_dir/TAMA");
 `./setup.pl --db --species`;
 chdir("$Bin/../bin");
 `ln -s $in_dir/TAMA ./`;
+
+####### Print help page
+sub PRINT_HELP{
+		print STDERR "Usage: $0 -dir <directory to install>\n";
+		print STDERR "\tIf -dir is not defined, TAMA will be installed at $bin_dir\n";
+		exit();
+}
