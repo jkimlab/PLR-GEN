@@ -17,6 +17,8 @@ my $num_of_read1 = 0;
 my $num_of_read2 = 0;
 my $line = -1;
 my $read_num = 0;
+#---------------------------------------------------------------------
+###### Converting read IDs for F read
 while(<FREAD1>){
 		chomp;
 		$line++;
@@ -45,6 +47,8 @@ if($in_read2 =~ /.gz$/){ open(FREAD2, "gunzip -c $in_read2 |"); }
 else{ open(FREAD2, "$in_read2"); }
 open(FOUT2, ">$out_dir/read_2.fq");
 $line = -1;
+#---------------------------------------------------------------------
+###### Converting read IDs for R read and checking pairs
 while(<FREAD2>){
 		chomp;
 		$line++;
