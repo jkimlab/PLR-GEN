@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 
-#my $container_list = $ARGV[0]; # raw/merged.l1.c1.bed
 my $in_normal_node = $ARGV[0]; # NORMAL merged
 my $in_bubble_node = $ARGV[1]; # BUBBLE.graph.out
 my $in_bubble_path = $ARGV[2]; # consensus_bubble_path.txt
@@ -14,7 +13,7 @@ my %hs_node_seq = ();
 my %hs_bubble_path = ();
 my %hs_container_list = ();
 
-################################# Normal nodes
+###### Extracting base sequences from normal nodes
 open(FNNODE, "$in_normal_node");
 while(<FNNODE>){
 		chomp;
@@ -25,7 +24,8 @@ while(<FNNODE>){
 		}
 }
 close(FNNODE);
-################################# Bubble nodes
+#---------------------------------------------------------------------
+###### Extracting base sequences from bubbles
 open(FBNODE, "$in_bubble_node");
 while(<FBNODE>){
 		chomp;
@@ -38,7 +38,8 @@ while(<FBNODE>){
 		}
 }
 close(FBNODE);
-################################# Bubble paths
+#---------------------------------------------------------------------
+###### Storing paths of bubbles for traverse
 open(FBPATH, "$in_bubble_path");
 while(<FBPATH>){
 		chomp;
@@ -47,7 +48,8 @@ while(<FBPATH>){
 }
 close(FBPATH);
 open(FOUT, ">$out_dir/pseudo-long_read.fa");
-################################# Sequence generation with bubble path
+#---------------------------------------------------------------------
+###### Sequence generation with bubble path
 print STDERR "# With consensus bubble path\n";
 my @container_with_bubble_path = (sort keys(%hs_bubble_path));
 foreach my $container (@container_with_bubble_path){
@@ -89,7 +91,8 @@ foreach my $container (@container_with_bubble_path){
 		}
 		delete($hs_container_list{$container});
 }
-################################# Sequence generation no bubble path
+#---------------------------------------------------------------------
+###### Sequence generation if there is no bubble in the path
 print STDERR "# No consensus bubble path\n";
 foreach my $container (sort keys(%hs_container_list)){
 		print STDERR ">$container\n";
