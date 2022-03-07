@@ -91,7 +91,7 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
    - :sparkle: `-1` and `-2` : input sequence files with paired-end reads; fastq or fastq.gz files 
    - :sparkle: `-r` or `-ref` : a list with all file paths of reference genome sequences; a text file
    - :sparkle: `-tama` : if this option is used, TAMA program will be used for reference preparation instead of `-r` (default: not used)
-   - `-sampling` : if this option is used, reference genomes will be randomly selected and used (default: not used)
+   - `-sampling` : if this option is used, reference genomes will be randomly selected and used (default: not used, range: 0-1)
 
 2. Output options 
 
@@ -103,7 +103,7 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
    - `-l` or `-min_length` : minimum length cutoff of generated pseudo-long reads (PLRs) (default: 100)
    - `-q` or `-mapq` : cutoff of mapping quality (used in samtools) (default: 20)
    - `-c` or `-min_count` : cutoff of mapping depth for generating normal nodes and bubbles; after piling-up of read mapping, alignment column less than the cutoff value will be discarded (default: 1)
-   - `-d` or `-min_depth` : cutoff of mapping depth of bubbles for filtering bubble nodes; a bubble with less than the cutoff % of mapping depth will be converted to a normal node
+   - `-d` or `-min_depth` : cutoff of mapping depth of bubbles for filtering bubble nodes; a bubble with less than the cutoff % of mapping depth will be converted to a normal node (default: 1, range: 0-100)
 
 * Help page of PLR-GEN 
 
@@ -168,7 +168,7 @@ For more information of TAMA, see :point_right: [TAMA github page](https://githu
 		
 ### Examples of running with the Docker image
 
-- Suppose (1) you pulled the PLR-GEN docker image (jkimlab/plrgen), (2) read_1.fq, read_2.fq are in /LOCAL_DISK/DATA directory, and (3) all reference sequence files are in /LOCAL_DISK/DATA/fasta/ directory. In this situation, you can run PLR-GEN with docker image as followed command,
+- Suppose (1) you pulled the PLR-GEN docker image (jkimlab/plrgen), (2) read_1.fq, read_2.fq are in /LOCAL_DISK/DATA directory, and (3) all reference sequence files are in /LOCAL_DISK/DATA/fasta/ directory. In this situation, you can run PLR-GEN with docker image as followed steps,
 	1. Make a reference list file in the /LOCAL_DISK/DATA directory with the file system for the docker image, for an example,
 		
 		file: /DATA/reference_list.txt
