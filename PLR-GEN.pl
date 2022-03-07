@@ -179,7 +179,7 @@ if(defined($ref_sampling)){
 						print FLOG "REF $i : $arr_all_ref_files[$sample_index]\n";
 						$i++;
 				}
-				if($i > $num_sampling){ last; }
+				if($i >= $num_sampling){ last; }
 		}
 		%hs_ref = %hs_sample;
 		%hs_sample=();
