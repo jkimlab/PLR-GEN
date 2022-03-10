@@ -56,7 +56,7 @@ PLR-GEN is a tool for the generation of pseudo-long-reads (PLRs) by using short-
 		
 2. Installation of TAMA with Docker
 
-		docker run --rm -v /PATH/TO/TAMA_DIR:/tama_dir -t jkimlab/plrgen:latest /work_dir/src/TAMA_install.pl /tama_dir
+		docker run --rm -v /PATH/TO/TAMA_DIR:/tama_dir -t jkimlab/plrgen:latest TAMA_install.pl /tama_dir
 		
 3. Manual installation
 
